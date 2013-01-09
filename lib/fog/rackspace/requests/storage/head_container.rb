@@ -1,6 +1,19 @@
 module Fog
   module Storage
     class Rackspace
+ 
+      class Mock
+        def head_container(container)
+          response = Excon::Response.new
+          response.status = 204          
+          response.headers = {
+            'X-Container-Object-Count' => 1,
+            'X-Container-Bytes-Used' => 123
+          }
+          response
+        end
+      end
+
       class Real
 
         # List number of objects and total bytes stored

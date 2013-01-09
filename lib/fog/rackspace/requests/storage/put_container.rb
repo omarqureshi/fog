@@ -1,6 +1,14 @@
 module Fog
   module Storage
     class Rackspace
+      class Mock
+        def put_container(name)
+          response = Excon::Response.new
+          response.status = 201
+          response
+        end
+      end
+      
       class Real
 
         # Create a new container

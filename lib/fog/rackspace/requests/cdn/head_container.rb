@@ -1,6 +1,20 @@
 module Fog
   module CDN
     class Rackspace
+      class Mock
+        def head_container(container)
+          response = Excon::Response.new
+          response.status = 204
+          response.headers = {
+            'X-CDN-Enabled' => true,
+            'X-CDN-URI' => "http://081e40d3ee1cec5f77bf-346eb45fd42c58ca13011d659bfc1ac1.r49.cf0.rackcdn.com",
+            'X-TTL' => 123,
+            'X-Log-Retention' => false
+          }
+          response
+        end
+      end
+
       class Real
 
         # List cdn properties for a container
