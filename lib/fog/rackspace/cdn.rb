@@ -40,6 +40,10 @@ module Fog
           self.class.data.delete(@rackspace_username)
         end
 
+        def enabled?
+          true
+        end
+
       end
 
       class Real
