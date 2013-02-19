@@ -1,4 +1,5 @@
 require 'fog/core'
+require 'fog/rackspace/mock_data'
 
 module Fog
   module Rackspace
@@ -16,15 +17,15 @@ module Fog
           data = nil
           message = nil
           status_code = nil
-          
+
           if error.response
-            status_code = error.response.status            
+            status_code = error.response.status
             unless error.response.body.empty?
               data = Fog::JSON.decode(error.response.body)
               message = data.values.first ? data.values.first['message'] : data['message']
             end
           end
-          
+
           new_error = super(error, message)
           new_error.instance_variable_set(:@response_data, data)
           new_error.instance_variable_set(:@status_code, status_code)          
@@ -62,7 +63,8 @@ module Fog
     service(:databases,        'rackspace/databases',         'Databases')
 
     def self.authenticate(options, connection_options = {})
-      rackspace_auth_url = options[:rackspace_auth_url] || "auth.api.rackspacecloud.com"
+      rackspace_auth_url = options[:rackspace_auth_url]
+      rackspace_auth_url ||= options[:rackspace_endpoint] == Fog::Compute::RackspaceV2::LON_ENDPOINT ? "lon.auth.api.rackspacecloud.com" : "auth.api.rackspacecloud.com"
       url = rackspace_auth_url.match(/^https?:/) ? \
                 rackspace_auth_url : 'https://' + rackspace_auth_url
       uri = URI.parse(url)
