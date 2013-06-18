@@ -46,6 +46,9 @@ An alternate file may be used by placing its path in the FOG_RC environment vari
   :clodo_username:
   :go_grid_api_key:
   :go_grid_shared_secret:
+  :google_client_email:
+  :google_key_location:
+  :google_project:
   :google_storage_access_key_id:
   :google_storage_secret_access_key:
   :hp_access_key:
@@ -71,6 +74,8 @@ An alternate file may be used by placing its path in the FOG_RC environment vari
   :rackspace_username:
   :rackspace_servicenet:
   :rackspace_cdn_ssl:
+  :riakcs_access_key_id:
+  :riakcs_secret_access_key:
   :stormondemand_username:
   :stormondemand_password:
   :terremark_username:

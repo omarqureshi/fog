@@ -23,6 +23,16 @@ module Shindo
       end
     end
   
+
+   def wait_for_server_deletion(server)
+     return if Fog.mocking?
+     begin
+       @instance.wait_for { state = 'DELETED' }
+     rescue Fog::Compute::RackspaceV2::NotFound => e
+       # do nothing
+     end
+   end
+
     def wait_for_server_state(service, server_id, state, error_states=nil)
       current_state = nil
       until current_state == state
@@ -34,6 +44,15 @@ module Shindo
         sleep 10 unless Fog.mocking?
       end
       sleep 30 unless Fog.mocking?
+    end
+
+    def rackspace_test_image_id(service) 
+      # I chose to use the first Ubuntu because it will work with the smallest flavor and it doesn't require a license
+      @image_id ||= Fog.credentials[:rackspace_image_id] || service.images.find {|img| img.name =~ /Ubuntu/ }.id
+    end
+
+    def rackspace_test_flavor_id(service)
+      @flavor_id ||= Fog.credentials[:rackspace_flavor_id] || service.flavors.first.id
     end
 
   end  

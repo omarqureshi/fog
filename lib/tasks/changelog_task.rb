@@ -15,9 +15,9 @@ module Fog
           changelog << ''
 
           require 'multi_json'
-          github_repo_data = Fog::JSON.decode(Excon.get('https://api.github.com/repos/fog/fog').body)
+          github_repo_data = Fog::JSON.decode(Excon.get('https://api.github.com/repos/fog/fog', :headers => {'User-Agent' => 'geemus'}).body)
           data = github_repo_data.reject {|key, value| !['forks', 'open_issues', 'watchers'].include?(key)}
-          github_collaborator_data = Fog::JSON.decode(Excon.get('https://api.github.com/repos/fog/fog/collaborators').body)
+          github_collaborator_data = Fog::JSON.decode(Excon.get('https://api.github.com/repos/fog/fog/collaborators', :headers => {'User-Agent' => 'geemus'}).body)
           data['collaborators'] = github_collaborator_data.length
           rubygems_data = Fog::JSON.decode(Excon.get('https://rubygems.org/api/v1/gems/fog.json').body)
           data['downloads'] = rubygems_data['downloads']
@@ -61,13 +61,16 @@ module Fog
               'geemus',
               'Henry Addison',
               'Kevin Menard',
+              'Kyle Rames',
               'Lincoln Stoll',
               'Luqman Amjad',
               'Michael Zeng',
+              'Nat Welch',
               'Nick Osborn',
               'nightshade427',
               'Patrick Debois',
               'Paul Thornthwaite',
+              'Rupak Ganguly',
               'Stepan G. Fedorov',
               'Wesley Beary'
             ].include?(committer)

@@ -63,7 +63,6 @@ module Fog
 
       class Mock
         attr_reader :auth_token
-        attr_reader :unscoped_token
         attr_reader :auth_token_expiration
         attr_reader :current_user
         attr_reader :current_tenant
@@ -230,8 +229,6 @@ module Fog
               }.merge!(params[:headers] || {}),
               :host     => @host,
               :path     => "#{@path}/#{params[:path]}"#,
-              # Causes errors for some requests like tenants?limit=1
-              # :query    => ('ignore_awful_caching' << Time.now.to_i.to_s)
             }))
           rescue Excon::Errors::Unauthorized => error
             raise if retried

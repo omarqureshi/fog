@@ -60,6 +60,8 @@ module Fog
       model      :policy
       collection :policies
 
+      ExpectedOptions = {}
+
       class Real
         include Fog::AWS::CredentialFetcher::ConnectionMethods
 
@@ -151,7 +153,7 @@ module Fog
               :parser     => parser
             })
           rescue Excon::Errors::HTTPStatusError => error
-            if match = error.message.match(/<Code>(.*)<\/Code>.*<Message>(.*)<\/Message>/)
+            if match = error.message.match(/(?:.*<Code>(.*)<\/Code>)(?:.*<Message>(.*)<\/Message>)/m)
               case match[1]
               when 'AlreadyExists'
                 #raise Fog::AWS::AutoScaling::IdentifierTaken.new(match[2])

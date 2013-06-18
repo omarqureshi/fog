@@ -29,6 +29,5 @@ module Fog
       MultiJson.decode(obj)
     end
 
-
   end
 end

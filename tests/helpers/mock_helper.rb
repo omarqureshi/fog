@@ -41,6 +41,10 @@ if Fog.mock?
     :go_grid_shared_secret            => 'go_grid_shared_secret',
     :google_storage_access_key_id     => 'google_storage_access_key_id',
     :google_storage_secret_access_key => 'google_storage_secret_access_key',
+    # Commented out till there are mocks for google/compute
+    #:google_project                   => 'google_project_name',
+    #:google_client_email              => 'fake@developer.gserviceaccount.com',
+    #:google_key_location              => '~/fake.p12',
     :hp_access_key                    => 'hp_access_key',
     :hp_secret_key                    => 'hp_secret_key',
     :hp_tenant_id                     => 'hp_tenant_id',
@@ -69,6 +73,8 @@ if Fog.mock?
     :libvirt_uri                      => 'qemu://libvirt/system',
     :rackspace_api_key                => 'rackspace_api_key',
     :rackspace_username               => 'rackspace_username',
+    :riakcs_access_key_id             => 'riakcs_access_key_id',
+    :riakcs_secret_access_key         => 'riakcs_secret_access_key',
     :storm_on_demand_username         => 'storm_on_demand_username',
     :storm_on_demand_password         => 'storm_on_demand_password',
     :vcloud_host                      => 'vcloud_host',
@@ -87,6 +93,8 @@ if Fog.mock?
     :vsphere_expected_pubkey_hash     => 'abcdef1234567890',
     :libvirt_uri                      => 'qemu:///system',
     :libvirt_username                 => 'root',
-    :libvirt_password                 => 'password'
+    :libvirt_password                 => 'password',
+    :cloudsigma_username              => 'csuname',
+    :cloudsigma_password              => 'cspass'
   }.merge(Fog.credentials)
 end

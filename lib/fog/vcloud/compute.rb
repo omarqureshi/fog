@@ -105,6 +105,8 @@ module Fog
       collection :vdcs
       model :organization
       collection :organizations
+      model :tag
+      collection :tags
 
       request_path 'fog/vcloud/requests/compute'
       request :clone_vapp
@@ -135,6 +137,10 @@ module Fog
       request :power_reset
       request :power_shutdown
       request :undeploy
+      request :get_metadata
+      request :delete_metadata
+      request :configure_metadata
+      request :configure_vm_customization_script
 
       class Mock
 
@@ -301,7 +307,7 @@ module Fog
 
         # Use this to set the Authorization header for login
         def authorization_header
-          "Basic #{Base64.encode64("#{@username}:#{@password}").chomp!}"
+          "Basic #{Base64.encode64("#{@username}:#{@password}").delete("\r\n")}"
         end
 
         # Actually do the request

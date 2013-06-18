@@ -177,7 +177,7 @@ module Fog
           signature = Fog::HP.escape(signature)
 
           # generate the temp url using the signature and expiry
-          temp_url = "#{scheme}://#{host}:#{port}#{encoded_path}?temp_url_sig=#{signature}&temp_url_expires=#{expires}"
+          "#{scheme}://#{host}:#{port}#{encoded_path}?temp_url_sig=#{signature}&temp_url_expires=#{expires}"
         end
 
       end
@@ -291,6 +291,7 @@ module Fog
             response = @connection.request(params.merge!({
               :headers  => {
                 'Content-Type' => 'application/json',
+                'Accept'       => 'application/json',
                 'X-Auth-Token' => @auth_token
               }.merge!(params[:headers] || {}),
               :host     => @host,
@@ -316,6 +317,7 @@ module Fog
             response = @connection.request(params.merge!({
               :headers  => {
                 'Content-Type' => 'application/json',
+                'Accept'       => 'application/json',
                 'X-Auth-Token' => @auth_token
               }.merge!(params[:headers] || {}),
               :host     => @host,

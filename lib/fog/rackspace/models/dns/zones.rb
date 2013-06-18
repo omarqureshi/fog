@@ -8,18 +8,14 @@ module Fog
 
         model Fog::DNS::Rackspace::Zone
 
+        # List all domains. Return by default a maximum of 100 items
+        # @param [Hash] options Options to pass to the underlying API call 
+        # @option options [String] :name search for domains containing the given substring
+        # @option options [Integer] :limit number of records to return
+        # @option options [Integer] :offset starting offset of records to return
         def all(options={})
           clear
           data = service.list_domains(options).body['domains']
-          load(data)
-        end
-        
-        # Returns all domains containing the given substring. Still limited 
-        # by the 100-domain pagination limit. Returns an empty array if
-        # no matches.
-        def find(substring)
-          clear
-          data = service.list_domains(:name => substring).body['domains']
           load(data)
         end
         
@@ -54,7 +50,7 @@ module Fog
 
           data = service.list_domain_details(zone_id).body
           new(data)
-        rescue Fog::Rackspace::Errors::NotFound
+        rescue Fog::DNS::Rackspace::NotFound
           nil
         #Accessing a valid (but other customer's) id returns a 503 error
         rescue Fog::Rackspace::Errors::ServiceUnavailable

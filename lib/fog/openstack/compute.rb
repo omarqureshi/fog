@@ -93,12 +93,21 @@ module Fog
       request :create_flavor
       request :delete_flavor
 
+      # Flavor Access
+      request :add_flavor_access
+      request :remove_flavor_access
+      request :list_tenants_with_flavor_access
+
       # Metadata
       request :list_metadata
       request :get_metadata
       request :set_metadata
       request :update_metadata
       request :delete_metadata
+
+      # Metadatam
+      request :delete_meta
+      request :update_meta
 
       # Address
       request :list_addresses
@@ -222,7 +231,8 @@ module Fog
                 'volumes'        => 10,
                 'cores'          => 20,
                 'ram'            => 51200
-              }
+              },
+              :volumes => {}
             }
           end
         end
@@ -334,7 +344,7 @@ module Fog
               }.merge!(params[:headers] || {}),
               :host     => @host,
               :path     => "#{@path}/#{@tenant_id}/#{params[:path]}",
-              :query    => params[:query] || ('ignore_awful_caching' << Time.now.to_i.to_s)
+              :query    => params[:query]
             }))
           rescue Excon::Errors::Unauthorized => error
             if error.response.body != 'Bad username or password' # token expiration
@@ -353,7 +363,7 @@ module Fog
               end
           end
 
-          unless response.body.empty?
+          if !response.body.empty? and response.get_header('Content-Type') == 'application/json'
             response.body = Fog::JSON.decode(response.body)
           end
 
